@@ -32,11 +32,13 @@ export const Join = () => {
 
   const [name, setName] = useState(""); // 이름
   const [isNameTouched, setIsNameTouched] = useState(false); // 이름 입력 여부
-  const [nameValid, setNameValid] = useState(true); // 이름 길이 유효성
+  const [nameValid, setNameValid] = useState(true); // 이름 확인
+  const [nameLengthValid, setNameLengthValid] = useState(true); // 이름 길이 유효성
 
   const [affiliation, setAffiliation] = useState(""); // 소속
   const [isAffiliationTouched, setIsAffiliationTouched] = useState(false); // 소속 입력 여부
-  const [affiliationValid, setAffiliationValid] = useState(true); // 소속값 유효성
+  const [affiliationValid, setAffiliationValid] = useState(true); // 소속값 확인
+  const [affiliationLengthValid, setAffiliationLengthValid] = useState(true); // 소속값 길이
 
   // 비밀번호
   const [password, setPassword] = useState(""); // 비밀번호
@@ -49,9 +51,14 @@ export const Join = () => {
 
   const navigate = useNavigate();
 
+  // 정규식 표현 모음
+  const emailRegex = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
+  const nameRegex = /([^가-힣\x20a-zA-Z])/i;
+  const passwordRegex =
+    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+
   // 이메일 유효성 검사
   useEffect(() => {
-    const emailRegex = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
     setEmailValid(emailRegex.test(email));
   }, [email]);
 
@@ -61,21 +68,22 @@ export const Join = () => {
     setInputCode(removeBlankCode);
   };
 
-  // 이름 유효성 검사 (최소 2자 이상)
+  // 이름 유효성 검사 (최소 2자 이상 + 한글로 자음, 모음만 입력되지 않도록)
   useEffect(() => {
-    setNameValid(name.length >= 2);
+    setNameValid(nameRegex.test(name));
+    // 이름 길이 2자 이상
+    setNameLengthValid(name.length >= 2);
   }, [name]);
 
-  // 소속 유효성 검사
+  // 소속 유효성 검사 (한글로 자음, 모음만 입력되지 않도록)
   useEffect(() => {
-    setAffiliationValid(affiliation.length > 0);
+    setAffiliationValid(nameRegex.test(affiliation));
+
+    setAffiliationLengthValid(affiliation.length > 0);
   }, [affiliation]);
 
   // 비밀번호 유효성 검사
   useEffect(() => {
-    const passwordRegex =
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
-
     // 특수문자, 영문자, 숫자가 포함되었는지 확인
     setPasswordValid(passwordRegex.test(password));
 
@@ -148,9 +156,6 @@ export const Join = () => {
 
   // 필드 값 검증 및 회원가입 버튼 활성화 조건
   useEffect(() => {
-    const passwordRegex =
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
-
     if (
       emailVerified &&
       name.trim().length >= 2 &&
@@ -264,8 +269,11 @@ export const Join = () => {
                 onChange={(e) => setName(e.target.value)}
                 onBlur={() => setIsNameTouched(true)}
               />
-              {!nameValid && isNameTouched && (
+              {!nameLengthValid && isNameTouched && (
                 <ErrorText>* 이름은 최소 2자 이상이어야 합니다.</ErrorText>
+              )}
+              {nameLengthValid && isNameTouched && nameValid && (
+                <ErrorText>* 이름을 정확하게 입력해주세요.</ErrorText>
               )}
             </Form.Group>
 
@@ -279,9 +287,14 @@ export const Join = () => {
                 onChange={(e) => setAffiliation(e.target.value)}
                 onBlur={() => setIsAffiliationTouched(true)}
               />
-              {!affiliationValid && isAffiliationTouched && (
+              {!affiliationLengthValid && isAffiliationTouched && (
                 <ErrorText>* 소속은 필수 입력값입니다.</ErrorText>
               )}
+              {affiliationLengthValid &&
+                isAffiliationTouched &&
+                affiliationValid && (
+                  <ErrorText>* 소속을 정확하게 입력해주세요.</ErrorText>
+                )}
             </Form.Group>
 
             {/* 비밀번호 입력 */}

@@ -39,7 +39,6 @@ export const Login = () => {
     <Container className="d-flex align-items-center justify-content-center min-vh-100">
       <Row className="justify-content-md-center w-100">
         <Col md={6}>
-          <BackBtn />
           <h2 className="text-center">로그인</h2>
           {errorMessage && <p className="text-danger">{errorMessage}</p>}{" "}
           {/* 에러 메시지 출력 */}

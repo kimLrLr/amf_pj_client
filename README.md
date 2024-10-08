@@ -1,70 +1,10 @@
-# Getting Started with Create React App
+### FindAccount 정리해보기..
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+만약에 ID찾기를 클릭했을 경우,handleFindID 핸들러가 동작하고, setIsFindingID값이 true, 반대로 setIsResettingPW값이 false가 되고, PW 재설정 버튼을 클릭한 경우에는 위와 반대로 true와 false값이 들어가게 된다.
 
-## Available Scripts
+처음 계정 찾기 페이지로 갔을 때는, 두 값 모두 false를 주어 버튼을 누르게 되는 값에 true를 주는 식으로??!
 
-In the project directory, you can run:
+=> 만약 ID찾기에서 이름을 입력하고 "ID찾기"를 누르는 경우, findIdHandler 동작하여 id 정보를 가져와 보여주고,
+=> PW 재설정을 누르는 경우, resettingPwHandler가 동작하여 ResetPassword페이지로 이동할 수 있는 링크가 담긴 메일을 발송하고, 사용자는 링크를 타고 들어오면 비밀번호를 재생성 할 수 있도록 설정
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+-> 제대로 재생성이 되었다면, "비밀번호가 정상적으로 변경되었습니다." 문구와 함께 로그인 페이지로 이동 버튼 넣으면 괜찮을 것 같기도함!

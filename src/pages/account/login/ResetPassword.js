@@ -16,8 +16,8 @@ export const ResetPassword = () => {
   };
 
   return (
-    <Container className="mt-5">
-      <Row className="justify-content-md-center">
+    <Container className="account_div">
+      <Row className="account_row">
         <Col md={6}>
           <h2 className="text-center">비밀번호 재설정</h2>
           <Form onSubmit={handlePasswordReset}>

@@ -2,10 +2,24 @@ import { useState } from "react";
 import { Button, Form, Container, Row, Col } from "react-bootstrap";
 import "../../../style/common.css";
 import { BackBtn } from "../../../components/BackBtn";
+import styled from "styled-components";
+
+const ArBtn = styled.button`
+  position: relative;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  border: none;
+  font-size: 25px;
+  font-weight: 700;
+  margin-bottom: 13px;
+  color: #0d6efd;
+`;
 
 export const FindAccount = () => {
   const [isFindingID, setIsFindingID] = useState(false);
   const [isResettingPW, setIsResettingPW] = useState(false);
+  const [clickArrow, setClickArrow] = useState(false);
 
   const handleFindID = () => {
     setIsFindingID(true);
@@ -17,11 +31,19 @@ export const FindAccount = () => {
     setIsResettingPW(true);
   };
 
+  const arrHandler = () => {
+    setIsFindingID(false);
+    setIsResettingPW(false);
+    setClickArrow(true);
+  };
+
   return (
     <Container className="account_div">
       <Row className="account_row">
         <Col md={6}>
-          <BackBtn />
+          {/* 계정 찾기(제일 첫 페이지)의 경우, 뒤로가기가 사용되는게 맞고, ID찾기나 PW재설정의 경우에는 값을 다시 false */}
+          {clickArrow ? <BackBtn /> : <ArBtn onClick={arrHandler}>{"<"}</ArBtn>}
+
           <h2 className="mb-3">계정 찾기</h2>
 
           {/* ID 찾기 및 비밀번호 재설정 버튼 */}

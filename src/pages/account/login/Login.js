@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Form, Container, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { BtnCom } from "../../components/BtnCom";
-import { BackBtn } from "../../components/BackBtn";
+import { BtnCom } from "../../../components/BtnCom";
+import "../../../style/common.css";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -36,10 +36,10 @@ export const Login = () => {
   };
 
   return (
-    <Container className="d-flex align-items-center justify-content-center min-vh-100">
-      <Row className="justify-content-md-center w-100">
+    <Container className="account_div">
+      <Row className="account_row">
         <Col md={6}>
-          <h2 className="text-center">로그인</h2>
+          <h2 className="mb-3">로그인</h2>
           {errorMessage && <p className="text-danger">{errorMessage}</p>}{" "}
           {/* 에러 메시지 출력 */}
           <Form onSubmit={handleSubmit}>
@@ -77,6 +77,12 @@ export const Login = () => {
               btnLink="join"
             />
           </Form>
+          <BtnCom
+            btnName="계정 찾기"
+            btnVariant="link"
+            btnClass="w-100"
+            btnLink="findAccount"
+          />
         </Col>
       </Row>
     </Container>

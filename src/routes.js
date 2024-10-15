@@ -3,5 +3,6 @@ export const routes = {
   join: "/join",
   login: "/login",
   findAccount: "/find-account",
-  resetPassword: "/reset-password",
+  resetPassword: "/reset-password/:id",
+  checkId: "/check-id",
 };

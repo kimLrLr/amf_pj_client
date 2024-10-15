@@ -7,6 +7,7 @@ import { FindAccount } from "./pages/account/login/FindAccount";
 import { ResetPassword } from "./pages/account/login/ResetPassword";
 import { PageNotFound } from "./pages/404/PageNotFound";
 import MainLayout from "./MainLayout";
+import { CheckId } from "./pages/account/login/CheckId";
 
 function Router() {
   return (
@@ -22,6 +23,7 @@ function Router() {
         <Route path={routes.login} element={<Login />} />
         <Route path={routes.findAccount} element={<FindAccount />} />
         <Route path={routes.resetPassword} element={<ResetPassword />} />
+        <Route path={routes.checkId} element={<CheckId />} />
       </Routes>
     </HashRouter>
   );

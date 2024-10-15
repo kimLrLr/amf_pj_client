@@ -13,7 +13,18 @@ const ArBtn = styled.button`
   color: #0d6efd;
 `;
 
-export const BackBtn = () => {
+export const BackBtn = ({ onClick }) => {
   const navigate = useNavigate();
-  return <ArBtn onClick={() => navigate(-1)}>{"<"}</ArBtn>;
+
+  const handleBackClick = () => {
+    if (onClick) {
+      // 상태 초기화 함수 실행시키기
+      onClick();
+    } else {
+      // 기본적으로는 뒤로가기
+      navigate(-1);
+    }
+  };
+
+  return <ArBtn onClick={handleBackClick}>{"<"}</ArBtn>;
 };

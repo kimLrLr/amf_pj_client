@@ -1,8 +1,17 @@
 import { useState } from "react";
-import { Form, Container, Row, Col } from "react-bootstrap";
+import { Form, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { BtnCom } from "../../../components/BtnCom";
-import "../../../style/common.css";
+import {
+  AccountRow,
+  FormControl,
+  FormGroup,
+  FormLabel,
+  MainContainer,
+  TitleText,
+} from "../../../style/common";
+import { loginUser } from "../../../api";
+import { ErrorText } from "../../../components/ErrorText";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -13,55 +22,53 @@ export const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:8080/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (response.ok) {
-        console.log("로그인 성공");
-        navigate("/"); // 로그인 성공 시 메인 페이지로 이동
-      } else {
-        const result = await response.json();
-        setErrorMessage(result); // 에러 메시지 설정
-        console.error("로그인 실패:", result);
-      }
+      const result = await loginUser(email, password);
+      console.log("로그인 성공", result);
+      navigate("/"); // 로그인 성공 시 메인 페이지로 이동
     } catch (error) {
-      console.error("서버 오류:", error);
-      setErrorMessage("서버 오류가 발생했습니다.");
+      console.error("로그인 실패:", error.message);
+      setErrorMessage(error.message); // 에러 메시지 설정
+
+      // 비밀번호가 틀린 경우 메시지 업데이트
+      if (error.message === "비밀번호 불일치") {
+        setErrorMessage("사용자 정보를 다시 확인해주세요.");
+      } else {
+        setErrorMessage("로그인에 실패했습니다. 다시 시도해주세요.");
+      }
     }
   };
 
   return (
-    <Container className="account_div">
-      <Row className="account_row">
+    <MainContainer>
+      <AccountRow>
         <Col md={6}>
-          <h2 className="mb-3">로그인</h2>
+          <TitleText>로그인</TitleText>
           {errorMessage && <p className="text-danger">{errorMessage}</p>}{" "}
           {/* 에러 메시지 출력 */}
           <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="formBasicEmail" className="mb-3">
-              <Form.Label>이메일(ID)</Form.Label>
-              <Form.Control
+            <FormGroup controlId="formBasicEmail">
+              <FormLabel>이메일(ID)</FormLabel>
+              <FormControl
                 type="email"
                 placeholder="이메일을 입력해주세요."
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-            </Form.Group>
+            </FormGroup>
 
-            <Form.Group controlId="formBasicPassword" className="mb-3">
-              <Form.Label>비밀번호</Form.Label>
-              <Form.Control
+            <FormGroup controlId="formBasicPassword">
+              <FormLabel>비밀번호</FormLabel>
+              <FormControl
                 type="password"
                 placeholder="비밀번호를 입력해주세요."
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-            </Form.Group>
+            </FormGroup>
+
+            {errorMessage && (
+              <ErrorText className="text-danger mb-3">{errorMessage}</ErrorText>
+            )}
 
             <BtnCom
               btnName="로그인"
@@ -84,7 +91,7 @@ export const Login = () => {
             btnLink="findAccount"
           />
         </Col>
-      </Row>
-    </Container>
+      </AccountRow>
+    </MainContainer>
   );
 };
